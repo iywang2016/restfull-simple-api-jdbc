@@ -16,6 +16,7 @@ import java.io.PrintWriter;
  * Created by STUDS8_2 on 12/19/2016.
  */
 public class MainSevlet extends HttpServlet {
+
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
         StringBuilder jb = new StringBuilder();
@@ -40,9 +41,14 @@ public class MainSevlet extends HttpServlet {
                 case 0:
                     String userName = jsonObject.getString("UserName");
                     String password = jsonObject.getString("password");
-                    JSONObject jsonToreturn = new JSONObject();
-                    jsonToreturn.put("answer",SqlLiteRequest.authorization(userName,password));
+                    JSONObject jsonToReturn = new JSONObject();
+                    if (SqlLiteRequest.authorization(userName,password).equals("ok"))
+                        jsonToReturn.put("anwser","ok");
+                    else
+                        jsonToReturn.put("anwser","reg");
+                    break;
                 case 1:
+
             }
         }catch (Exception e){
             System.out.println(e.toString());
