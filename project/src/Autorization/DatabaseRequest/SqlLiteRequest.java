@@ -23,19 +23,21 @@ public class SqlLiteRequest {
             getConnection();
 
             stm = conn.createStatement();
-            String sql = ("SELECT Password FROM Users WHERE Username ='"+userName+"';");
-            rs = stm.executeQuery(sql);
+            String sqlRequest = ("SELECT Password FROM Users WHERE Username ='"+userName+"';");
+            rs = stm.executeQuery(sqlRequest);
             String rightPassword = rs.getString("Password");
 
-            if (!rightPassword.equals(interPassword)) {
-                sql = "SELECT MAX(UserID) FROM Users";
-                rs = stm.executeQuery(sql);
+            if (rightPassword.equals("") || rightPassword.equals(null)) {
+                sqlRequest = "SELECT MAX(UserID) FROM Users";
+                rs = stm.executeQuery(sqlRequest);
                 int userID = rs.getInt("UserID");
                 userID++;
-                sql = ("INSERT INTO Users (UserID,UserName,Password) VALUES ("+userID+",'"+userName+"','"+interPassword+"');");
-                stm.execute(sql);
+                sqlRequest = ("INSERT INTO Users (UserID,UserName,Password) VALUES ("+userID+",'"+userName+"','"+interPassword+"');");
+                stm.execute(sqlRequest);
                  res = "reg";
             }
+            else if(!rightPassword.equals(interPassword))
+                res = "Retry";
         }catch (Exception e) {
             System.out.println(e.toString());}
         finally {
@@ -43,7 +45,8 @@ public class SqlLiteRequest {
         }
         return res;
     }
-    public static ArrayList<String> top10Requsters() throws ClassNotFoundException, SQLException, NamingException{
+
+    public static ArrayList<String> top10Requsts() throws ClassNotFoundException, SQLException, NamingException{
             ArrayList<String> res = new ArrayList<>();
             getConnection();
 
@@ -58,4 +61,25 @@ public class SqlLiteRequest {
 
             return res;
     }
+
+    public static void deleteUser(String userName) throws ClassNotFoundException, SQLException, NamingException{
+            getConnection();
+
+            stm = conn.createStatement();
+            String sqlRequest = "DELETE FROM Users WHERE Username ='" +userName+"';";
+            stm.executeQuery(sqlRequest);
+    }
+
+    public static ArrayList<String> getInfoAboutUser(String userName) throws ClassNotFoundException, SQLException, NamingException{
+        ArrayList<String> res = new ArrayList<>();
+        getConnection();
+
+        stm = conn.createStatement();
+        String sqlRequest = "SELECT Number,LastTime,AverageTime FROM Users WHERE Username ='" +userName+"';";
+        res.add(stm.executeQuery(sqlRequest).getString("Number"));
+        res.add(stm.executeQuery(sqlRequest).getString("LastTime"));
+        res.add(stm.executeQuery(sqlRequest).getString("AverageTime"));
+        return res;
+    }
+
 }

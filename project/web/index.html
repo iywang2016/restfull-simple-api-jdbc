@@ -11,6 +11,9 @@
     <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
           rel="stylesheet" type="text/css">
+    <link href="https://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
+          rel="stylesheet" type="text/css">
+
     <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -19,7 +22,7 @@
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-    <script src="js/script.js"></script>
+    <script src="js/index.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
@@ -30,15 +33,15 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <a class="btn btn-primary" onclick="showAllNames()">Показать все имена</a>
-
                 <div class="border">
                     <div>
-                        <a class="btn btn-primary" onclick="addName()">Добавить имя</a>
-
+                        <a class="btn btn-primary" onclick="logIn()">Login</a>
+                        <a class="btn btn-primary" onclick="deleteUser()">forget enter passwprd</a>
                         <div class="modal-body" style="text-align: center;">
-                            <input class="form-control" id="NewNameInput"
-                                   placeholder="Enter some name">
+                            <input class="form-control" id="UserName"
+                                   placeholder="Enter some Login">
+                            <input class="form-control" id="Password"
+                                   placeholder="Enter some Password">
                         </div>
                     </div>
                 </div>
