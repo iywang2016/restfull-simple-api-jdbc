@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import LanguageDetection.*;
 import Servlet.DatabaseRequest.*;
 
+import com.cybozu.labs.langdetect.LangDetectException;
 import org.json.JSONObject;
+
+import java.awt.image.AreaAveragingScaleFilter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,7 +22,7 @@ import java.util.ArrayList;
  */
 public class MainSevlet extends HttpServlet {
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         StringBuilder jb = new StringBuilder();
         String line = null;
@@ -57,11 +60,22 @@ public class MainSevlet extends HttpServlet {
                     break;
                 case 3:
                     String userRequest = jsonObject.getString("UserName");
-                    ArrayList<String> userInformation = SqlLiteRequest.getInfoAboutUser(userRequest);
-                    jsonToReturn.put("answer","userInformation");
-                    jsonToReturn.put("timeRequested",userInformation.get(0));
-                    jsonToReturn.put("date-time",userInformation.get(1));
-                    jsonToReturn.put("averagetime",userInformation.get(2));
+                    ArrayList<String[]> userInformation = SqlLiteRequest.getInfoAboutUsers(userRequest);
+                    jsonToReturn.put("answer","usersInformation");
+                    ArrayList<String> names = new ArrayList<>();
+                    ArrayList<String> numbers = new ArrayList<>();
+                    ArrayList<String> date = new ArrayList<>();
+                    ArrayList<String> average = new ArrayList<>();
+                    for (int i = 0; i < userInformation.size();++i){
+                        names.add(userInformation.get(i)[0]);
+                        numbers.add(userInformation.get(i)[1]);
+                        date.add(userInformation.get(i)[2]);
+                        average.add(userInformation.get(i)[3]);
+                    }
+                    jsonToReturn.put("UserName",names);
+                    jsonToReturn.put("timeRequested",numbers);
+                    jsonToReturn.put("date-time",date);
+                    jsonToReturn.put("averagetime",average);
                     break;
                 case 4:
                     String word = jsonObject.getString("word");
@@ -71,13 +85,13 @@ public class MainSevlet extends HttpServlet {
                     String tmp[] = SqlLiteRequest.detectLanguage(word);
                     String language = tmp[0];
                     String probability = tmp[1];
-                    if (language.isEmpty()) {
+                    if (language==null || language.isEmpty()) {
                         String lanAndProb[] = LanguageDetection.Detectr.detecteLanguage(word);
                         SqlLiteRequest.rememberWord(word,lanAndProb[0],lanAndProb[1]);
                         language = lanAndProb[0];
-                        probability = lanAndProb[2];
+                        probability = lanAndProb[1];
                     }
-                    jsonToReturn.put("answer", language);
+                    jsonToReturn.put("answer", "language");
                     jsonToReturn.put("language",language);
                     jsonToReturn.put("probability",probability);
                     break;
