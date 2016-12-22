@@ -16,7 +16,7 @@ public class SqlLiteRequest {
 
     private static void getConnection() throws ClassNotFoundException, SQLException, NamingException{
         Class.forName("org.sqlite.JDBC");
-        conn = DriverManager.getConnection("jdbc:sqlite:D:\\testdb");
+        conn = DriverManager.getConnection("jdbc:sqlite:D:\\Testbd.db");
     }
 
     public static String authorization(String userName, String interPassword) throws SQLException, ClassNotFoundException, NamingException{
@@ -85,7 +85,7 @@ public class SqlLiteRequest {
         sqlRequest = "SELECT  julianday('now') - AverageTime as days FROM Users";
         rs = stm.executeQuery(sqlRequest);
         for (int i = 0; i < res.size();++i){
-            int a = (rs.getInt("days")/Integer.parseInt(res.get(i)[2]));
+            double a = ((double)rs.getInt("days")/(Integer.parseInt(res.get(i)[1])+2));
             res.get(i)[3]=String.valueOf(a);
         }
         closeAllConections();
@@ -111,7 +111,7 @@ public class SqlLiteRequest {
         getConnection();
         double probability = Double.parseDouble(probab);
         stm = conn.createStatement();
-        String sqlRequest = "INSERT INTO Words (Word,Language,Probability) VALUES ('"+word+"','"+language+"','"+probability+"');";
+        String sqlRequest = "INSERT INTO Words (Word,Language,Probability) VALUES ("+"'"+word+"','"+language+"','"+probability+"');";
         stm.executeUpdate(sqlRequest);
 
         closeAllConections();
