@@ -7,7 +7,7 @@
 
     <servlet>
         <servlet-name>MainSevlet</servlet-name>
-        <servlet-class>Autorization.MainSevlet</servlet-class>
+        <servlet-class>Servlet.MainSevlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

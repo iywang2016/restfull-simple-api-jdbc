@@ -18,7 +18,7 @@ else {
 
 function serverConnectFunc(serverUrl, jsonData) {
     $.ajax({
-        url: "localhost:8080"+"/",
+        url: "http://localhost:8080/",
         type: 'POST',
         data: jsonData,
 
@@ -39,19 +39,28 @@ function serverConnectFunc(serverUrl, jsonData) {
                     alert("re-enter your password");
                     break;
                 case "top10requests":
+                    content = JSON.stringify(event);
+                    alert(content);
+                    console.log(content);
                     break;
                 case "userDeleted":
                     alert("your acount was deleted, now you can sign in again");
                     break;
-                case "userInformation":
-
+                case "usersInformation":
+                    content = JSON.stringify(event);
+                    alert(content);
+                    console.log(content);
                     break;
                 case "language":
-                    alert("");
+                    alert("hhhhh");
+                    content = JSON.stringify(event);
+                    alert(content);
+                    console.log(content);
                     break;
             }
         },
         error: function (xhr, status, error) {
+            alert("error");
             alert(error);
         }
     });
@@ -87,14 +96,12 @@ function userInformation() {
     serverConnectFunc(serverPath, JSON.stringify(jsonData));
 }
 
-function getPassword() {
-    var password = $('#Password').val();
-
-}
 
 function detectLanguage() {
+    console.log("in detectLanguage");
     var jsonData = new Object();
     jsonData.command = "4";
-    jsonData.text =  $('#Password').val();
+    jsonData.UserName = userName;
+    jsonData.word =  $('#Password').val();
     serverConnectFunc(serverPath, JSON.stringify(jsonData));
 }
