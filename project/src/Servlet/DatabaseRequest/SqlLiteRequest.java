@@ -29,7 +29,7 @@ public class SqlLiteRequest {
             rs = stm.executeQuery(sqlRequest);
 
             if (rs.isClosed()) {
-                sqlRequest = "INSERT INTO Users (UserName,Password) VALUES ('"+userName+"','"+interPassword+"');";
+                sqlRequest = "INSERT INTO Users (UserName,Password,LastTime,Number,AverageTime) VALUES ('"+userName+"','"+interPassword+"',date('now'),0,julianday('now'));";
                 stm.executeUpdate(sqlRequest);
                  res = "reg";
             }
@@ -40,7 +40,6 @@ public class SqlLiteRequest {
         }catch (Exception e) {
             System.out.println(e.toString());}
         finally {
-            closeAllConections();
         }
         return res;
     }
@@ -54,7 +53,6 @@ public class SqlLiteRequest {
             while (rs.next()){
                 res.add(rs.getString("Request"));
             }
-            closeAllConections();
             return res;
     }
 
@@ -65,7 +63,6 @@ public class SqlLiteRequest {
             String sqlRequest = "DELETE FROM Users WHERE Username ='" +userName+"';";
             stm.executeUpdate(sqlRequest);
 
-            closeAllConections();
     }
 
     public static ArrayList<String[]> getInfoAboutUsers(String userName) throws ClassNotFoundException, SQLException, NamingException{
@@ -88,7 +85,6 @@ public class SqlLiteRequest {
             double a = ((double)rs.getInt("days")/(Integer.parseInt(res.get(i)[1])+2));
             res.get(i)[3]=String.valueOf(a);
         }
-        closeAllConections();
         return res;
     }
 
@@ -103,7 +99,6 @@ public class SqlLiteRequest {
             res[0] = rs.getString("Language");
             res[1] = Double.toString(rs.getDouble("Probability"));
         }
-        closeAllConections();
         return res;
     }
 
@@ -114,7 +109,6 @@ public class SqlLiteRequest {
         String sqlRequest = "INSERT INTO Words (Word,Language,Probability) VALUES ("+"'"+word+"','"+language+"','"+probability+"');";
         stm.executeUpdate(sqlRequest);
 
-        closeAllConections();
     }
 
     public static void newRequest(String userName, String word) throws ClassNotFoundException, SQLException, NamingException{
@@ -123,7 +117,6 @@ public class SqlLiteRequest {
         stm = conn.createStatement();
         String sqlRequest = "INSERT INTO Requests (Username,Request) VALUES ('"+userName+"','"+word+"');";
         stm.executeUpdate(sqlRequest);
-        closeAllConections();
         updateUserInfo(userName);
 
     }
@@ -134,19 +127,19 @@ public class SqlLiteRequest {
         stm = conn.createStatement();
         String sqlRequest = "SELECT Number FROM Users WHERE Username ='"+userName+"';";
         rs = stm.executeQuery(sqlRequest);
-        int number = rs.isClosed() ? 1 : rs.getInt("Number");
+        int number = rs.isClosed() ? 0 : rs.getInt("Number");
+        number++;
         sqlRequest = "UPDATE Users SET Number = "+number+" WHERE Username = '"+userName+"';";
         stm.executeUpdate(sqlRequest);
-        if (number == 1) {
+        if (number == 1 || number == 0) {
             sqlRequest = "UPDATE Users SET AverageTime = julianday('now') WHERE Username = '"+userName+"';";
             stm.executeUpdate(sqlRequest);
         }
-        closeAllConections();
 
 
     }
 
-    private static void closeAllConections() throws ClassNotFoundException, SQLException, NamingException{
+    public static void closeAllConections() throws ClassNotFoundException, SQLException, NamingException{
         rs.close();
         stm.close();
         conn.close();

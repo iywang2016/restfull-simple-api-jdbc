@@ -11,6 +11,7 @@ import LanguageDetection.Detection.DetectHelper;
 import Servlet.DatabaseRequest.*;
 import LanguageDetection.*;
 
+import com.cybozu.labs.langdetect.LangDetectException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -61,6 +62,8 @@ public class MainSevlet extends HttpServlet {
                     JSONObject jsonToReturn = new JSONObject();
                     jsonToReturn.put("answer",SqlLiteRequest.authorization(userName,password));
                     out.println(jsonToReturn.toString());
+                    SqlLiteRequest.closeAllConections();
+
                     break;
                 case 1:
                     JSONObject jsonToReturn1 = new JSONObject();
@@ -68,6 +71,8 @@ public class MainSevlet extends HttpServlet {
                     jsonToReturn1.put("answer","top10requests");
                     jsonToReturn1.put("top10Requests",top10Requests.toString());
                     out.println(jsonToReturn1.toString());
+                    SqlLiteRequest.closeAllConections();
+
                     break;
                 case 2:
                     JSONObject jsonToReturn2 = new JSONObject();
@@ -75,6 +80,8 @@ public class MainSevlet extends HttpServlet {
                     SqlLiteRequest.deleteUser(userToDelete);
                     jsonToReturn2.put("answer","userDeleted");
                     out.println(jsonToReturn2.toString());
+                    SqlLiteRequest.closeAllConections();
+
                     break;
                 case 3:
                     JSONObject jsonToReturn3 = new JSONObject();
@@ -96,6 +103,8 @@ public class MainSevlet extends HttpServlet {
                     jsonToReturn3.put("date-time",date);
                     jsonToReturn3.put("averagetime",average);
                     out.println(jsonToReturn3.toString());
+                    SqlLiteRequest.closeAllConections();
+
                     break;
                 case 4:
                     JSONObject jsonToReturn4 = new JSONObject();
@@ -113,6 +122,7 @@ public class MainSevlet extends HttpServlet {
                     jsonToReturn4.put("language",language);
                     jsonToReturn4.put("probability",probability);
                     out.println(jsonToReturn4.toString());
+                    SqlLiteRequest.closeAllConections();
                     break;
             }
         }catch (Exception e){
