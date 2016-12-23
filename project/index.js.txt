@@ -1,6 +1,3 @@
-/**
- * Created by STUDS8_2 on 12/23/2016.
- */
 var serverHostName = window.location.hostname;
 var serverProtocolName = window.location.protocol;
 var portName = window.location.port;
@@ -33,9 +30,10 @@ function serverConnectFunc(serverUrl, jsonData) {
             {
                 case "ok":
                     alert("success");
-                    top10Requests();
+                    top10requests();
+                    alert("after");
                     userInformation();
-                    $("#").empty();
+                    $("#table_names").empty();
                     break;
 
                 case "reg":
@@ -45,6 +43,7 @@ function serverConnectFunc(serverUrl, jsonData) {
                     alert("re-enter your password");
                     break;
                 case "top10requests":
+                    console.log(content);
                     var keysList = data["top10Requests"].replace("[", ""). replace("]", "").split(",");
                     $("#top10requests").empty();
 
@@ -57,26 +56,8 @@ function serverConnectFunc(serverUrl, jsonData) {
                     break;
                 case "usersInformation":
                     content = JSON.stringify(data);
-                    console.log(typeof (data["timeRequested"][0]));
-                    $("#timeRequested").empty();
-                    $("#averagetime").empty();
-                    $("#users").empty();
-                    $("#date-time").empty();
-                    for (var i = 0; i < 30;++i) {
-                    $("#timeRequested").append("<tr>" + data["timeRequested"][i].toString()+ "</tr>");
-                    console.log(data["timeRequested"][i]);
-                    }
-
-                    data["averagetime"].forEach(function(item, i, arr) {
-                        $("#averagetime").append("<tr>" + item[i] + "</tr>");
-                    });
-
-                    data["UserName"].forEach(function(item, i, arr) {
-                        $("#users").append("<tr>" +  + "</tr>");
-                    });
-                    data["date-time"].forEach(function(item, i, arr) {
-                        $("#date-time").append("<tr>" + item + "</tr>");
-                    });
+                    alert(content);
+                    console.log(content);
                     break;
                 case "language":
                     var probability = data["probability"].replace("[", ""). replace("]", "").split(",");
@@ -84,6 +65,7 @@ function serverConnectFunc(serverUrl, jsonData) {
 
                     var language = data["language"].replace("[", ""). replace("]", "").split(",");
                     $("#myPopup").append(language+"  "+probability);
+                    console.log(content);
                     userInformation();
                     break;
             }

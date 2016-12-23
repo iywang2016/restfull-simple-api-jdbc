@@ -22,8 +22,6 @@
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-    <script src="js/index.js"></script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
 </head>
@@ -32,11 +30,11 @@
 <div class="section">
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3" id="logIn">
                 <div class="border">
                     <div>
                         <a class="btn btn-primary" onclick="logIn()">Login</a>
-                        <a class="btn btn-primary" onclick="detectLanguage()">forget enter passwprd</a>
+                        <a class="btn btn-primary" onclick="deleteUser()">forget enter passwprd</a>
                         <div class="modal-body" style="text-align: center;">
                             <input class="form-control" id="UserName"
                                    placeholder="Enter some Login">
@@ -49,13 +47,32 @@
             </div>
             <div class="col-md-6">
                 <table class="table">
-                    <tbody id="table_names">
+                    <tbody id="">
+                    <input type="form-control " class="popup" onclick="popUp()" id="detectLanguage">
+                    <div class="popup" onclick="">
+                        <span class="popuptext" id="myPopup"></span>
+                    </div>
                     </tbody>
+                    <a class="btn btn-primary" onclick="detectLanguage()">Detect Language</a>
+
+                </table>
+
+                <table class="table">
+                    <tbody id="top10requests">
+                    </tbody>
+                </table>
+                <table class="table" >
+                    <td id="users"></td>
+                    <td id="timeRequested"></td>
+                    <td id="date-time"></td>
+                    <td id="averagetime"></td>
                 </table>
             </div>
         </div>
     </div>
 </div>
 </body>
+<script src="js/index.js"></script>
+
 
 </html>
