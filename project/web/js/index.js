@@ -1,6 +1,3 @@
-/**
- * Created by STUDS8_2 on 12/23/2016.
- */
 var serverHostName = window.location.hostname;
 var serverProtocolName = window.location.protocol;
 var portName = window.location.port;
@@ -62,22 +59,28 @@ function serverConnectFunc(serverUrl, jsonData) {
                     $("#averagetime").empty();
                     $("#users").empty();
                     $("#date-time").empty();
-                    for (var i = 0; i < 30;++i) {
-                    $("#timeRequested").append("<tr>" + data["timeRequested"][i].toString()+ "</tr>");
-                    console.log(data["timeRequested"][i]);
-                    }
-
-                    data["averagetime"].forEach(function(item, i, arr) {
-                        $("#averagetime").append("<tr>" + item[i] + "</tr>");
+                    
+                    var keysList = data["timeRequested"].replace("[", ""). replace("]", "").split(",");
+                    keysList.forEach(function(item, i, arr) {
+                        $("#timeRequested").append("<tr>" + item + "</tr>");
                     });
-
-                    data["UserName"].forEach(function(item, i, arr) {
-                        $("#users").append("<tr>" +  + "</tr>");
+                    
+                    keysList = data["averagetime"].replace("[", ""). replace("]", "").split(",");
+                    keysList.forEach(function(item, i, arr) {
+                        $("#averagetime").append("<tr>" + item + "</tr>");
                     });
-                    data["date-time"].forEach(function(item, i, arr) {
+                    
+                    keysList = data["UserName"].replace("[", ""). replace("]", "").split(",");
+                    keysList.forEach(function(item, i, arr) {
+                        $("#users").append("<tr>" + item + "</tr>");
+                    });
+                    
+                    keysList = data["date-time"].replace("[", ""). replace("]", "").split(",");
+                    keysList.forEach(function(item, i, arr) {
                         $("#date-time").append("<tr>" + item + "</tr>");
                     });
                     break;
+                    
                 case "language":
                     var probability = data["probability"].replace("[", ""). replace("]", "").split(",");
                     $("#myPopup").empty();
