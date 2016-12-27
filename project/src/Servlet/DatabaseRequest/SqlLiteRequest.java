@@ -10,16 +10,16 @@ import java.util.ArrayList;
  * Created by STUDS8_2 on 12/19/2016.
  */
 public class SqlLiteRequest {
-    private static Connection conn;
-    private static Statement stm;
-    private static ResultSet rs;
+    private  Connection conn;
+    private  Statement stm;
+    private  ResultSet rs;
 
-    private static void getConnection() throws ClassNotFoundException, SQLException, NamingException{
+    private  void getConnection() throws ClassNotFoundException, SQLException, NamingException{
         Class.forName("org.sqlite.JDBC");
-        conn = DriverManager.getConnection("jdbc:sqlite:D:\\Testbd.db");
+        conn = DriverManager.getConnection("jdbc:sqlite:Testbd.db");
     }
 
-    public static String authorization(String userName, String interPassword) throws SQLException, ClassNotFoundException, NamingException{
+    public  String autorize(String userName, String interPassword) throws SQLException, ClassNotFoundException, NamingException{
         String res = "ok";
         try {
             getConnection();
@@ -44,10 +44,9 @@ public class SqlLiteRequest {
         return res;
     }
 
-    public static ArrayList<String> top10Requsts() throws ClassNotFoundException, SQLException, NamingException{
+    public  ArrayList<String> top10Requsts() throws ClassNotFoundException, SQLException, NamingException{
             ArrayList<String> res = new ArrayList<>();
             getConnection();
-
             stm = conn.createStatement();
             rs = stm.executeQuery("SELECT Request, COUNT(*) AS times_requested FROM Requests GROUP BY Request ORDER BY times_requested DESC LIMIT 10");
             while (rs.next()){
@@ -56,16 +55,14 @@ public class SqlLiteRequest {
             return res;
     }
 
-    public static void deleteUser(String userName) throws ClassNotFoundException, SQLException, NamingException{
+    public  void deleteUser(String userName) throws ClassNotFoundException, SQLException, NamingException{
             getConnection();
-
             stm = conn.createStatement();
             String sqlRequest = "DELETE FROM Users WHERE Username ='" +userName+"';";
             stm.executeUpdate(sqlRequest);
-
     }
 
-    public static ArrayList<String[]> getInfoAboutUsers(String userName) throws ClassNotFoundException, SQLException, NamingException{
+    public  ArrayList<String[]> getInfoAboutUsers(String userName) throws ClassNotFoundException, SQLException, NamingException{
         ArrayList<String[]> res = new ArrayList<>();
         getConnection();
 
@@ -88,7 +85,7 @@ public class SqlLiteRequest {
         return res;
     }
 
-    public static String[] detectLanguage(String text) throws ClassNotFoundException, SQLException, NamingException {
+    public  String[] detectLanguage(String text) throws ClassNotFoundException, SQLException, NamingException {
         String[] res = new String[2];
         getConnection();
         double tmp;
@@ -102,7 +99,7 @@ public class SqlLiteRequest {
         return res;
     }
 
-    public static void rememberWord(String word, String language, String probab) throws ClassNotFoundException, SQLException, NamingException{
+    public  void rememberWord(String word, String language, String probab) throws ClassNotFoundException, SQLException, NamingException{
         getConnection();
         double probability = Double.parseDouble(probab);
         stm = conn.createStatement();
@@ -111,19 +108,16 @@ public class SqlLiteRequest {
 
     }
 
-    public static void newRequest(String userName, String word) throws ClassNotFoundException, SQLException, NamingException{
+    public  void newRequest(String userName, String word) throws ClassNotFoundException, SQLException, NamingException{
         getConnection();
-
         stm = conn.createStatement();
         String sqlRequest = "INSERT INTO Requests (Username,Request) VALUES ('"+userName+"','"+word+"');";
         stm.executeUpdate(sqlRequest);
         updateUserInfo(userName);
-
     }
 
-    private static void updateUserInfo(String userName)throws ClassNotFoundException, SQLException, NamingException {
+    private  void updateUserInfo(String userName)throws ClassNotFoundException, SQLException, NamingException {
         getConnection();
-
         stm = conn.createStatement();
         String sqlRequest = "SELECT Number FROM Users WHERE Username ='"+userName+"';";
         rs = stm.executeQuery(sqlRequest);
@@ -135,11 +129,9 @@ public class SqlLiteRequest {
             sqlRequest = "UPDATE Users SET AverageTime = julianday('now') WHERE Username = '"+userName+"';";
             stm.executeUpdate(sqlRequest);
         }
-
-
     }
 
-    public static void closeAllConections() throws ClassNotFoundException, SQLException, NamingException{
+    public  void closeAllConections() throws ClassNotFoundException, SQLException, NamingException{
         rs.close();
         stm.close();
         conn.close();

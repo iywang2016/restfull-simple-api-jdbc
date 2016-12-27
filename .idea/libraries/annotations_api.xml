@@ -1,0 +1,35 @@
+<component name="libraryTable">
+  <library name="annotations-api">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/annotations-api.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/catalina-ant.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/catalina-ha.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/catalina-storeconfig.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/catalina-tribes.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/catalina.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/ecj-4.5.1.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/el-api.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/jasper-el.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/jasper.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/jaspic-api.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/javax.json-api-1.0.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/json-20160810.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/jsp-api.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/mysql-connector-java-5.1.40-bin.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/org.json.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/servlet-api.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/sqlite-jdbc-3.15.1.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/tomcat-api.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/tomcat-coyote.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/tomcat-dbcp.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/tomcat-jdbc.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/tomcat-jni.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/tomcat-util-scan.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/tomcat-util.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/tomcat-websocket.jar!/" />
+      <root url="jar://$USER_HOME$/apache-tomcat-8.5.9/lib/websocket-api.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

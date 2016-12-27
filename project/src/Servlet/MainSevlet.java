@@ -7,12 +7,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import LanguageDetection.Detection.DetectHelper;
+import LanguageDetection.Detection.*;
 import Servlet.DatabaseRequest.*;
 import LanguageDetection.*;
 
 import com.cybozu.labs.langdetect.LangDetectException;
 import org.json.JSONObject;
+import scala.collection.mutable.StringBuilder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,9 +27,7 @@ import javax.servlet.RequestDispatcher;
 @WebServlet(name="MainSevlet",urlPatterns={"/hello"})
 public class MainSevlet extends HttpServlet {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         RequestDispatcher dispatcher = request.getRequestDispatcher("index.html");
         if (dispatcher != null){
@@ -37,10 +36,20 @@ public class MainSevlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            JSONObject jsonObject = getJSONObject(request);
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            String command = jsonObject.getString("command");
+            out.println(makeCommand(command,jsonObject).toString());
+        }catch (Exception e){
+            System.out.println(e.toString());
+        }
+    }
 
+    private JSONObject getJSONObject(HttpServletRequest request){
         StringBuilder jb = new StringBuilder();
         String line = null;
-
         try{
             BufferedReader reader = request.getReader();
             while ((line = reader.readLine()) != null)
@@ -48,85 +57,99 @@ public class MainSevlet extends HttpServlet {
         } catch (Exception e){
             System.out.println(e.toString());
         }
+        return new JSONObject(jb.toString());
+    }
 
-        try {
-            JSONObject jsonObject = new JSONObject(jb.toString());
-
-            response.setContentType("text/html;charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            int command = jsonObject.getInt("command");
-            switch (command){
-                case 0:
-                    String userName = jsonObject.getString("UserName");
-                    String password = jsonObject.getString("password");
-                    JSONObject jsonToReturn = new JSONObject();
-                    jsonToReturn.put("answer",SqlLiteRequest.authorization(userName,password));
-                    out.println(jsonToReturn.toString());
-                    SqlLiteRequest.closeAllConections();
-
-                    break;
-                case 1:
-                    JSONObject jsonToReturn1 = new JSONObject();
-                    ArrayList<String> top10Requests = SqlLiteRequest.top10Requsts();
-                    jsonToReturn1.put("answer","top10requests");
-                    jsonToReturn1.put("top10Requests",top10Requests.toString());
-                    out.println(jsonToReturn1.toString());
-                    SqlLiteRequest.closeAllConections();
-
-                    break;
-                case 2:
-                    JSONObject jsonToReturn2 = new JSONObject();
-                    String userToDelete = jsonObject.getString("UserName");
-                    SqlLiteRequest.deleteUser(userToDelete);
-                    jsonToReturn2.put("answer","userDeleted");
-                    out.println(jsonToReturn2.toString());
-                    SqlLiteRequest.closeAllConections();
-
-                    break;
-                case 3:
-                    JSONObject jsonToReturn3 = new JSONObject();
-                    String userRequest = jsonObject.getString("UserName");
-                    ArrayList<String[]> userInformation = SqlLiteRequest.getInfoAboutUsers(userRequest);
-                    jsonToReturn3.put("answer","usersInformation");
-                    ArrayList<String> names = new ArrayList<>();
-                    ArrayList<String> numbers = new ArrayList<>();
-                    ArrayList<String> date = new ArrayList<>();
-                    ArrayList<String> average = new ArrayList<>();
-                    for (int i = 0; i < userInformation.size();++i){
-                        names.add(userInformation.get(i)[0]);
-                        numbers.add(userInformation.get(i)[1]);
-                        date.add(userInformation.get(i)[2]);
-                        average.add(userInformation.get(i)[3]);
-                    }
-                    jsonToReturn3.put("UserName",names);
-                    jsonToReturn3.put("timeRequested",numbers);
-                    jsonToReturn3.put("date-time",date);
-                    jsonToReturn3.put("averagetime",average);
-                    out.println(jsonToReturn3.toString());
-                    SqlLiteRequest.closeAllConections();
-
-                    break;
-                case 4:
-                    JSONObject jsonToReturn4 = new JSONObject();
-                    String word = jsonObject.getString("word");
-                    String user = jsonObject.getString("UserName");
-                    String language="error comes";
-                    String probability="";
-                    try {
-                    String tmp[] = DetectHelper.Helper(user,word);
-                    language = tmp[0];
-                    probability = tmp[1];
-                    }
-                    catch (Exception e){}
-                    jsonToReturn4.put("answer", "language");
-                    jsonToReturn4.put("language",language);
-                    jsonToReturn4.put("probability",probability);
-                    out.println(jsonToReturn4.toString());
-                    SqlLiteRequest.closeAllConections();
-                    break;
-            }
-        }catch (Exception e){
-            System.out.println(e.toString());
+    private JSONObject makeCommand(String command,JSONObject jsonObject) {
+        switch (command){
+            case "logIn":
+                return logIN(jsonObject);
+            case "top10Request":
+                return getTop10Request(jsonObject);
+            case "deleteUser":
+                return deleteUser(jsonObject);
+            case "usersInformation":
+                return getUsersInformation(jsonObject);
+            case "detectLanguage":
+                return detectLanguage(jsonObject);
+            default:
+                return new JSONObject().put("anwser","something went wrong");
         }
     }
+
+    private JSONObject logIN(JSONObject jsonObject){
+        String userName = jsonObject.getString("UserName");
+        String password = jsonObject.getString("password");
+        JSONObject jsonToReturn = new JSONObject();
+        jsonToReturn.put("answer",SqlLiteRequest.autorize(userName,password));
+        SqlLiteRequest.closeAllConections();
+        return jsonToReturn;
+    }
+
+    private JSONObject getTop10Request(JSONObject jsonObject){
+        JSONObject jsonToReturn = new JSONObject();
+        ArrayList<String> top10Requests = SqlLiteRequest.top10Requsts();
+        jsonToReturn.put("answer","top10requests");
+        jsonToReturn.put("top10Requests",top10Requests.toString());
+        SqlLiteRequest.closeAllConections();
+        return jsonToReturn;
+    }
+
+    private JSONObject deleteUser(JSONObject jsonObject){
+        JSONObject jsonToReturn = new JSONObject();
+        String userToDelete = jsonObject.getString("UserName");
+        SqlLiteRequest.deleteUser(userToDelete);
+        jsonToReturn.put("answer","userDeleted");
+        SqlLiteRequest.closeAllConections();
+        return jsonToReturn;
+    }
+
+    private JSONObject getUsersInformation(JSONObject jsonObject){
+        String userRequest = jsonObject.getString("UserName");
+        ArrayList<String[]> userInformation = SqlLiteRequest.getInfoAboutUsers(userRequest);
+        JSONObject jsonToReturn = convertUserInformation(userInformation);
+        SqlLiteRequest.closeAllConections();
+        return jsonToReturn;
+    }
+
+    private JSONObject detectLanguage(JSONObject jsonObject){
+        JSONObject jsonToReturn = new JSONObject();
+        String language="error comes";
+        String probability="";
+        try {
+            String tmp[] = DetectHelper.Helper(jsonObject.getString("UserName"),jsonObject.getString("word"));
+            language = tmp[0];
+            probability = tmp[1];
+        }
+        catch (Exception e){
+            System.out.println("error in DetectHelper");
+        }
+        jsonToReturn.put("answer", "language");
+        jsonToReturn.put("language",language);
+        jsonToReturn.put("probability",probability);
+        SqlLiteRequest.closeAllConections();
+        return jsonToReturn;
+    }
+
+    private JSONObject convertUserInformation(ArrayList<String[]> userInformation){
+        JSONObject jsonToReturn = new JSONObject();
+        jsonToReturn.put("answer","usersInformation");
+        ArrayList<String> names = new ArrayList<>();
+        ArrayList<String> numbers = new ArrayList<>();
+        ArrayList<String> date = new ArrayList<>();
+        ArrayList<String> average = new ArrayList<>();
+        for (int i = 0; i < userInformation.size();++i){
+            names.add(userInformation.get(i)[0]);
+            numbers.add(userInformation.get(i)[1]);
+            date.add(userInformation.get(i)[2]);
+            average.add(userInformation.get(i)[3]);
+        }
+        jsonToReturn.put("UserName",names.toString());
+        jsonToReturn.put("timeRequested",numbers.toString());
+        jsonToReturn.put("date-time",date.toString());
+        jsonToReturn.put("averagetime",average.toString());
+        return jsonToReturn;
+    }
 }
+
+

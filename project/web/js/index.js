@@ -97,7 +97,7 @@ function serverConnectFunc(serverUrl, jsonData) {
 
 function logIn() {
     var jsonData = new Object();
-    jsonData.command = "0";
+    jsonData.command = "logIn";
     userName =  $('#UserName').val();
     password = $('#Password').val();
     jsonData.UserName = userName;
@@ -108,19 +108,19 @@ function logIn() {
 function top10Requests()
 {
     var jsonData = new Object();
-    jsonData.command = "1";
+    jsonData.command = "top10Request";
     serverConnectFunc(serverPath, JSON.stringify(jsonData));
 }
 function deleteUser() {
     var jsonData = new Object();
-    jsonData.command = "2";
+    jsonData.command = "deleteUser";
     jsonData.UserName = userName;
     serverConnectFunc(serverPath, JSON.stringify(jsonData));
 }
 
 function userInformation() {
     var jsonData = new Object();
-    jsonData.command = "3";
+    jsonData.command = "usersInformation";
     jsonData.UserName = userName;
     serverConnectFunc(serverPath, JSON.stringify(jsonData));
 }
@@ -129,7 +129,7 @@ function userInformation() {
 function detectLanguage() {
     console.log("in detectLanguage");
     var jsonData = new Object();
-    jsonData.command = "4";
+    jsonData.command = "detectLanguage";
     jsonData.UserName = userName;
     jsonData.word =  $('#detectLanguage').val();
     serverConnectFunc(serverPath, JSON.stringify(jsonData));
