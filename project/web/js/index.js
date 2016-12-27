@@ -1,7 +1,7 @@
 var serverHostName = window.location.hostname;
 var serverProtocolName = window.location.protocol;
 var portName = window.location.port;
-
+//РАЗБИТЬ ПО ФАЙЛАМ ИЗСПОЛЬЗОВАТЬ map вместо case сделать класс user
 var userName;
 var password;
 
