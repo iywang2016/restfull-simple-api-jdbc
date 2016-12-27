@@ -5,7 +5,7 @@ import sun.util.cldr.CLDRLocaleDataMetaInfo;
 import javax.naming.NamingException;
 import java.sql.*;
 import java.util.ArrayList;
-
+//убрать static. разбить на разные функции изменить имена функций. изменить sql запросы. убрать абсолютный файловй путь.не делать глобальный переменный для подключений
 /**
  * Created by STUDS8_2 on 12/19/2016.
  */
