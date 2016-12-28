@@ -1,7 +1,5 @@
 package Servlet.DatabaseRequest;
 
-import sun.util.cldr.CLDRLocaleDataMetaInfo;
-
 import javax.naming.NamingException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,40 +14,45 @@ public class SqlLiteRequest {
     private  Statement stm;
     private  ResultSet rs;
 
-    private  void getConnection() throws ClassNotFoundException, SQLException, NamingException{
+    private  void createConnection() throws ClassNotFoundException, SQLException, NamingException{
         Class.forName("org.sqlite.JDBC");
         conn = DriverManager.getConnection("jdbc:sqlite:Testbd.db");
+        stm = conn.createStatement();
     }
 
     public  String autorize(String userName, String interPassword) throws SQLException, ClassNotFoundException, NamingException{
-        String res = "ok";
+        String res = "";
         try {
-            getConnection();
-
-            stm = conn.createStatement();
-            String sqlRequest = ("SELECT Password FROM Users WHERE Username ='"+userName+"';");
+            createConnection();
+            String sqlRequest = ("SELECT Password,Username FROM Users WHERE Username ='"+userName+"';");
             rs = stm.executeQuery(sqlRequest);
-
-            if (rs.isClosed()) {
-                sqlRequest = "INSERT INTO Users (UserName,Password,LastTime,Number,AverageTime) VALUES ('"+userName+"','"+interPassword+"',date('now'),0,julianday('now'));";
-                stm.executeUpdate(sqlRequest);
-                 res = "reg";
-            }
-            else if(!rs.getString("Password").equals(interPassword))
-                res = "Retry";//date('now');
-            sqlRequest = "UPDATE Users SET LastTime = date('now') WHERE Username ='"+userName+"';";
-            stm.executeUpdate(sqlRequest);
+            res = rs.isClosed() ? register(userName,interPassword) : checkPassword(rs,interPassword);
         }catch (Exception e) {
-            System.out.println(e.toString());}
-        finally {
+            System.out.println(e.toString());
         }
         return res;
     }
 
+    private String register(String userName, String interPassword)throws SQLException, ClassNotFoundException,NamingException{
+        String sqlRequest = "INSERT INTO Users (UserName,Password,LastTime,Number,AverageTime) VALUES ('"+userName+"','"+interPassword+"',date('now'),0,julianday('now'));";
+        stm.executeUpdate(sqlRequest);
+        return "reg";
+    }
+
+    private String checkPassword(ResultSet rs , String interPassword) throws SQLException, ClassNotFoundException, NamingException{
+        if (!rs.getString("Password").equals(interPassword))
+            return "Retry";
+        else {
+            String userName = rs.getString("userName");
+            String  sqlRequest = "UPDATE Users SET LastTime = date('now') WHERE Username ='"+userName+"';";
+            stm.executeUpdate(sqlRequest);
+            return "ok";
+        }
+    }
+
     public  ArrayList<String> top10Requsts() throws ClassNotFoundException, SQLException, NamingException{
             ArrayList<String> res = new ArrayList<>();
-            getConnection();
-            stm = conn.createStatement();
+            createConnection();
             rs = stm.executeQuery("SELECT Request, COUNT(*) AS times_requested FROM Requests GROUP BY Request ORDER BY times_requested DESC LIMIT 10");
             while (rs.next()){
                 res.add(rs.getString("Request"));
@@ -58,17 +61,14 @@ public class SqlLiteRequest {
     }
 
     public  void deleteUser(String userName) throws ClassNotFoundException, SQLException, NamingException{
-            getConnection();
-            stm = conn.createStatement();
+            createConnection();
             String sqlRequest = "DELETE FROM Users WHERE Username ='" +userName+"';";
             stm.executeUpdate(sqlRequest);
     }
 
     public  ArrayList<String[]> getInfoAboutUsers(String userName) throws ClassNotFoundException, SQLException, NamingException{
         ArrayList<String[]> res = new ArrayList<>();
-        getConnection();
-
-        stm = conn.createStatement();
+        createConnection();
         String sqlRequest = "SELECT Username,Number,LastTime FROM Users;";
         rs = stm.executeQuery(sqlRequest);
         while (rs.next()) {
@@ -89,9 +89,8 @@ public class SqlLiteRequest {
 
     public  String[] detectLanguage(String text) throws ClassNotFoundException, SQLException, NamingException {
         String[] res = new String[2];
-        getConnection();
+        createConnection();
         double tmp;
-        stm = conn.createStatement();
         String sqlRequest = "SELECT Probability,Language FROM Words WHERE Word ='" + text + "';";
         rs = stm.executeQuery(sqlRequest);
         if (!rs.isClosed()){
@@ -102,25 +101,22 @@ public class SqlLiteRequest {
     }
 
     public  void rememberWord(String word, String language, String probab) throws ClassNotFoundException, SQLException, NamingException{
-        getConnection();
+        createConnection();
         double probability = Double.parseDouble(probab);
-        stm = conn.createStatement();
         String sqlRequest = "INSERT INTO Words (Word,Language,Probability) VALUES ("+"'"+word+"','"+language+"','"+probability+"');";
         stm.executeUpdate(sqlRequest);
 
     }
 
     public  void newRequest(String userName, String word) throws ClassNotFoundException, SQLException, NamingException{
-        getConnection();
-        stm = conn.createStatement();
+        createConnection();
         String sqlRequest = "INSERT INTO Requests (Username,Request) VALUES ('"+userName+"','"+word+"');";
         stm.executeUpdate(sqlRequest);
         updateUserInfo(userName);
     }
 
     private  void updateUserInfo(String userName)throws ClassNotFoundException, SQLException, NamingException {
-        getConnection();
-        stm = conn.createStatement();
+        createConnection();
         String sqlRequest = "SELECT Number FROM Users WHERE Username ='"+userName+"';";
         rs = stm.executeQuery(sqlRequest);
         int number = rs.isClosed() ? 0 : rs.getInt("Number");

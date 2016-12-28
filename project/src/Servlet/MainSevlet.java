@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import LanguageDetection.Detection.*;
 import Servlet.DatabaseRequest.*;
 import LanguageDetection.*;
+import servletComands.*;
 
 import com.cybozu.labs.langdetect.LangDetectException;
 import org.json.JSONObject;
@@ -26,7 +27,6 @@ import javax.servlet.RequestDispatcher;
  */
 @WebServlet(name="MainSevlet",urlPatterns={"/hello"})
 public class MainSevlet extends HttpServlet {
-
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         RequestDispatcher dispatcher = request.getRequestDispatcher("index.html");
@@ -76,8 +76,7 @@ public class MainSevlet extends HttpServlet {
                 return new JSONObject().put("anwser","something went wrong");
         }
     }
-
-    private JSONObject logIN(JSONObject jsonObject){
+    public JSONObject logIN(JSONObject jsonObject){
         String userName = jsonObject.getString("UserName");
         String password = jsonObject.getString("password");
         JSONObject jsonToReturn = new JSONObject();
@@ -86,7 +85,7 @@ public class MainSevlet extends HttpServlet {
         return jsonToReturn;
     }
 
-    private JSONObject getTop10Request(JSONObject jsonObject){
+    public JSONObject getTop10Request(JSONObject jsonObject){
         JSONObject jsonToReturn = new JSONObject();
         ArrayList<String> top10Requests = SqlLiteRequest.top10Requsts();
         jsonToReturn.put("answer","top10requests");
@@ -95,7 +94,7 @@ public class MainSevlet extends HttpServlet {
         return jsonToReturn;
     }
 
-    private JSONObject deleteUser(JSONObject jsonObject){
+    public JSONObject deleteUser(JSONObject jsonObject){
         JSONObject jsonToReturn = new JSONObject();
         String userToDelete = jsonObject.getString("UserName");
         SqlLiteRequest.deleteUser(userToDelete);
@@ -104,7 +103,7 @@ public class MainSevlet extends HttpServlet {
         return jsonToReturn;
     }
 
-    private JSONObject getUsersInformation(JSONObject jsonObject){
+    public JSONObject getUsersInformation(JSONObject jsonObject){
         String userRequest = jsonObject.getString("UserName");
         ArrayList<String[]> userInformation = SqlLiteRequest.getInfoAboutUsers(userRequest);
         JSONObject jsonToReturn = convertUserInformation(userInformation);
@@ -112,7 +111,7 @@ public class MainSevlet extends HttpServlet {
         return jsonToReturn;
     }
 
-    private JSONObject detectLanguage(JSONObject jsonObject){
+    public JSONObject detectLanguage(JSONObject jsonObject){
         JSONObject jsonToReturn = new JSONObject();
         String language="error comes";
         String probability="";
@@ -131,7 +130,7 @@ public class MainSevlet extends HttpServlet {
         return jsonToReturn;
     }
 
-    private JSONObject convertUserInformation(ArrayList<String[]> userInformation){
+    public JSONObject convertUserInformation(ArrayList<String[]> userInformation){
         JSONObject jsonToReturn = new JSONObject();
         jsonToReturn.put("answer","usersInformation");
         ArrayList<String> names = new ArrayList<>();
@@ -150,6 +149,7 @@ public class MainSevlet extends HttpServlet {
         jsonToReturn.put("averagetime",average.toString());
         return jsonToReturn;
     }
+
 }
 
 
