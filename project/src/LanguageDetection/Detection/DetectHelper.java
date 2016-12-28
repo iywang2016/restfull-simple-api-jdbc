@@ -17,8 +17,8 @@ public class DetectHelper {
     public static String[] Helper(String user,String word)throws LangDetectException, ClassNotFoundException,SQLException, NamingException, PathException{
         Servlet.DatabaseRequest.SqlLiteRequest.newRequest(user,word);
 
-        String tmp[] = Servlet.DatabaseRequest.SqlLiteRequest.detectLanguage(word);
-        if (tmp[0]==null || tmp[0].isEmpty()) {
+        String tmp = Servlet.DatabaseRequest.SqlLiteRequest.detectLanguage(word);
+        if (tmp==null || tmp[0].isEmpty()) {
             String lanAndProb[] = LanguageDetection.Detectr.detecteLanguage(word);
             Servlet.DatabaseRequest.SqlLiteRequest.rememberWord(word,lanAndProb[0],lanAndProb[1]);
             tmp[0] = lanAndProb[0];

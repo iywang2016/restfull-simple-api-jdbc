@@ -26,7 +26,7 @@ public class SqlLiteRequest {
             createConnection();
             String sqlRequest = ("SELECT Password,Username FROM Users WHERE Username ='"+userName+"';");
             rs = stm.executeQuery(sqlRequest);
-            res = rs.isClosed() ? register(userName,interPassword) : checkPassword(rs,interPassword);
+            res = rs.isClosed() ? register(userName,interPassword) : checkPassword(interPassword);
         }catch (Exception e) {
             System.out.println(e.toString());
         }
@@ -39,7 +39,7 @@ public class SqlLiteRequest {
         return "reg";
     }
 
-    private String checkPassword(ResultSet rs , String interPassword) throws SQLException, ClassNotFoundException, NamingException{
+    private String checkPassword(String interPassword) throws SQLException, ClassNotFoundException, NamingException{
         if (!rs.getString("Password").equals(interPassword))
             return "Retry";
         else {
@@ -88,16 +88,11 @@ public class SqlLiteRequest {
     }
 
     public  String[] detectLanguage(String text) throws ClassNotFoundException, SQLException, NamingException {
-        String[] res = new String[2];
         createConnection();
         double tmp;
         String sqlRequest = "SELECT Probability,Language FROM Words WHERE Word ='" + text + "';";
         rs = stm.executeQuery(sqlRequest);
-        if (!rs.isClosed()){
-            res[0] = rs.getString("Language");
-            res[1] = Double.toString(rs.getDouble("Probability"));
-        }
-        return res;
+        return rs.isClosed() ? new String[]{} : new String[]{rs.getString("Language"),rs.getString("Probability")};
     }
 
     public  void rememberWord(String word, String language, String probab) throws ClassNotFoundException, SQLException, NamingException{

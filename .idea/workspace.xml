@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bed1dc99-f439-479a-8829-4a96d1009f7e" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/src/LanguageDetection/Detection/DetectHelper.java" afterPath="$PROJECT_DIR$/project/src/LanguageDetection/Detection/DetectHelper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/src/Servlet/DatabaseRequest/SqlLiteRequest.java" afterPath="$PROJECT_DIR$/project/src/Servlet/DatabaseRequest/SqlLiteRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/src/Servlet/MainSevlet.java" afterPath="$PROJECT_DIR$/project/src/Servlet/MainSevlet.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/project/project/target/" />
@@ -29,8 +29,8 @@
       <file leaf-file-name="MainSevlet.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/project/src/Servlet/MainSevlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-630">
-              <caret line="78" column="24" lean-forward="true" selection-start-line="78" selection-start-column="24" selection-end-line="78" selection-end-column="24" />
+            <state relative-caret-position="90">
+              <caret line="78" column="24" lean-forward="false" selection-start-line="78" selection-start-column="24" selection-end-line="78" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -38,10 +38,30 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="Detectr.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/project/src/LanguageDetection/Detectr.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DetectHelper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/project/src/LanguageDetection/Detection/DetectHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="24" column="35" lean-forward="true" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/project/web/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
+            <state relative-caret-position="1785">
               <caret line="134" column="38" lean-forward="false" selection-start-line="134" selection-start-column="38" selection-end-line="134" selection-end-column="38" />
               <folding />
             </state>
@@ -51,22 +71,22 @@
       <file leaf-file-name="SqlLiteRequest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/project/src/Servlet/DatabaseRequest/SqlLiteRequest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-210">
-              <caret line="36" column="49" lean-forward="false" selection-start-line="36" selection-start-column="49" selection-end-line="36" selection-end-column="49" />
+            <state relative-caret-position="-1034">
+              <caret line="29" column="30" lean-forward="true" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="30" />
               <folding>
-                <marker date="1482884243991" expanded="true" signature="1027:1093" ph="SELECT Passw... Users" />
-                <marker date="1482884243991" expanded="true" signature="1517:1657" ph="INSERT INTO Users... " />
-                <marker date="1482884243991" expanded="true" signature="2055:2125" ph="UPDATE Users... " />
-                <marker date="1482884243991" expanded="true" signature="2443:2556" ph="SELECT Reque... Requests" />
-                <marker date="1482884243991" expanded="true" signature="2858:2907" ph="DELETE FROM " />
-                <marker date="1482884243991" expanded="true" signature="3200:3242" ph="SELECT Usern... Users" />
-                <marker date="1482884243991" expanded="true" signature="3556:3613" ph="SELECT julia... Users" />
-                <marker date="1482884243991" expanded="true" signature="4101:4166" ph="SELECT Proba... " />
-                <marker date="1482884243991" expanded="true" signature="4644:4745" ph="INSERT INTO Words... " />
-                <marker date="1482884243991" expanded="true" signature="4973:5047" ph="INSERT INTO Requests... " />
-                <marker date="1482884243991" expanded="true" signature="5300:5355" ph="SELECT Numbe... Users" />
-                <marker date="1482884243991" expanded="true" signature="5504:5572" ph="UPDATE Users... " />
-                <marker date="1482884243991" expanded="true" signature="5683:5762" ph="UPDATE Users... " />
+                <marker date="1482922853344" expanded="true" signature="1027:1093" ph="SELECT Passw... Users" />
+                <marker date="1482922853344" expanded="true" signature="1514:1654" ph="INSERT INTO Users... " />
+                <marker date="1482922853344" expanded="true" signature="2037:2107" ph="UPDATE Users... " />
+                <marker date="1482922853344" expanded="true" signature="2425:2538" ph="SELECT Reque... Requests" />
+                <marker date="1482922853344" expanded="true" signature="2840:2889" ph="DELETE FROM " />
+                <marker date="1482922853344" expanded="true" signature="3182:3224" ph="SELECT Usern... Users" />
+                <marker date="1482922853344" expanded="true" signature="3538:3595" ph="SELECT julia... Users" />
+                <marker date="1482922853344" expanded="true" signature="4045:4110" ph="SELECT Proba... " />
+                <marker date="1482922853344" expanded="true" signature="4531:4632" ph="INSERT INTO Words... " />
+                <marker date="1482922853344" expanded="true" signature="4860:4934" ph="INSERT INTO Requests... " />
+                <marker date="1482922853344" expanded="true" signature="5187:5242" ph="SELECT Numbe... Users" />
+                <marker date="1482922853344" expanded="true" signature="5391:5459" ph="UPDATE Users... " />
+                <marker date="1482922853344" expanded="true" signature="5570:5649" ph="UPDATE Users... " />
               </folding>
             </state>
           </provider>
@@ -95,6 +115,7 @@
         <option value="$PROJECT_DIR$/project/web/js/index.js" />
         <option value="$PROJECT_DIR$/project/src/Servlet/servletComands.java" />
         <option value="$PROJECT_DIR$/project/src/Servlet/MainSevlet.java" />
+        <option value="$PROJECT_DIR$/project/src/LanguageDetection/Detection/DetectHelper.java" />
         <option value="$PROJECT_DIR$/project/src/Servlet/DatabaseRequest/SqlLiteRequest.java" />
       </list>
     </option>
@@ -192,6 +213,36 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="LanguageDetection" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="restfull-simple-api-jdbc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="restfull-simple-api-jdbc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="LanguageDetection" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Detection" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -616,12 +667,12 @@
       <option name="presentableId" value="Default" />
       <updated>1482856749789</updated>
       <workItem from="1482869889709" duration="281000" />
-      <workItem from="1482873517423" duration="7789000" />
+      <workItem from="1482873517423" duration="8635000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8070000" />
+    <option name="totallyTimeSpent" value="8916000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
@@ -682,14 +733,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/project/web/js/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="134" column="38" lean-forward="false" selection-start-line="134" selection-start-column="38" selection-end-line="134" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/project/src/Servlet/servletComands.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -698,34 +741,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/project/web/js/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1785">
+          <caret line="134" column="38" lean-forward="false" selection-start-line="134" selection-start-column="38" selection-end-line="134" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/project/src/Servlet/MainSevlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-630">
-          <caret line="78" column="24" lean-forward="true" selection-start-line="78" selection-start-column="24" selection-end-line="78" selection-end-column="24" />
+        <state relative-caret-position="90">
+          <caret line="78" column="24" lean-forward="false" selection-start-line="78" selection-start-column="24" selection-end-line="78" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/project/src/LanguageDetection/Detectr.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/src/LanguageDetection/Detection/DetectHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="24" column="35" lean-forward="true" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/project/src/Servlet/DatabaseRequest/SqlLiteRequest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-210">
-          <caret line="36" column="49" lean-forward="false" selection-start-line="36" selection-start-column="49" selection-end-line="36" selection-end-column="49" />
+        <state relative-caret-position="-1034">
+          <caret line="29" column="30" lean-forward="true" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="30" />
           <folding>
-            <marker date="1482884243991" expanded="true" signature="1027:1093" ph="SELECT Passw... Users" />
-            <marker date="1482884243991" expanded="true" signature="1517:1657" ph="INSERT INTO Users... " />
-            <marker date="1482884243991" expanded="true" signature="2055:2125" ph="UPDATE Users... " />
-            <marker date="1482884243991" expanded="true" signature="2443:2556" ph="SELECT Reque... Requests" />
-            <marker date="1482884243991" expanded="true" signature="2858:2907" ph="DELETE FROM " />
-            <marker date="1482884243991" expanded="true" signature="3200:3242" ph="SELECT Usern... Users" />
-            <marker date="1482884243991" expanded="true" signature="3556:3613" ph="SELECT julia... Users" />
-            <marker date="1482884243991" expanded="true" signature="4101:4166" ph="SELECT Proba... " />
-            <marker date="1482884243991" expanded="true" signature="4644:4745" ph="INSERT INTO Words... " />
-            <marker date="1482884243991" expanded="true" signature="4973:5047" ph="INSERT INTO Requests... " />
-            <marker date="1482884243991" expanded="true" signature="5300:5355" ph="SELECT Numbe... Users" />
-            <marker date="1482884243991" expanded="true" signature="5504:5572" ph="UPDATE Users... " />
-            <marker date="1482884243991" expanded="true" signature="5683:5762" ph="UPDATE Users... " />
+            <marker date="1482922853344" expanded="true" signature="1027:1093" ph="SELECT Passw... Users" />
+            <marker date="1482922853344" expanded="true" signature="1514:1654" ph="INSERT INTO Users... " />
+            <marker date="1482922853344" expanded="true" signature="2037:2107" ph="UPDATE Users... " />
+            <marker date="1482922853344" expanded="true" signature="2425:2538" ph="SELECT Reque... Requests" />
+            <marker date="1482922853344" expanded="true" signature="2840:2889" ph="DELETE FROM " />
+            <marker date="1482922853344" expanded="true" signature="3182:3224" ph="SELECT Usern... Users" />
+            <marker date="1482922853344" expanded="true" signature="3538:3595" ph="SELECT julia... Users" />
+            <marker date="1482922853344" expanded="true" signature="4045:4110" ph="SELECT Proba... " />
+            <marker date="1482922853344" expanded="true" signature="4531:4632" ph="INSERT INTO Words... " />
+            <marker date="1482922853344" expanded="true" signature="4860:4934" ph="INSERT INTO Requests... " />
+            <marker date="1482922853344" expanded="true" signature="5187:5242" ph="SELECT Numbe... Users" />
+            <marker date="1482922853344" expanded="true" signature="5391:5459" ph="UPDATE Users... " />
+            <marker date="1482922853344" expanded="true" signature="5570:5649" ph="UPDATE Users... " />
           </folding>
         </state>
       </provider>
