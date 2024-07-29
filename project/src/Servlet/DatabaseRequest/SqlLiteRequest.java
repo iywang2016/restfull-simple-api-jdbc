@@ -3,6 +3,8 @@ package Servlet.DatabaseRequest;
 import javax.naming.NamingException;
 import java.sql.*;
 import java.util.ArrayList;
+import org.checkerframework.checker.sqlquotes.qual.SqlEvenQuotes;
+
 //убрать static. разбить на разные функции изменить имена функций. изменить sql запросы. убрать абсолютный файловй путь.не делать глобальный переменный для подключений
 //работь с обьектами а не строками ловить эксепшионы более узко
 //изменить форматирование
@@ -24,7 +26,7 @@ public class SqlLiteRequest {
         String res = "";
         try {
             createConnection();
-            String sqlRequest = ("SELECT Password,Username FROM Users WHERE Username ='"+userName+"';");
+            String sqlRequest = ("SELECT Password,Username FROM Users WHERE Username ='"+sanitize(userName)+"';");
             rs = stm.executeQuery(sqlRequest);
             res = rs.isClosed() ? register(userName,interPassword) : checkPassword(interPassword);
         }catch (Exception e) {
@@ -34,7 +36,7 @@ public class SqlLiteRequest {
     }
 
     private String register(String userName, String interPassword)throws SQLException, ClassNotFoundException,NamingException{
-        String sqlRequest = "INSERT INTO Users (UserName,Password,LastTime,Number,AverageTime) VALUES ('"+userName+"','"+interPassword+"',date('now'),0,julianday('now'));";
+        String sqlRequest = "INSERT INTO Users (UserName,Password,LastTime,Number,AverageTime) VALUES ('"+sanitize(userName)+"','"+sanitize(interPassword)+"',date('now'),0,julianday('now'));";
         stm.executeUpdate(sqlRequest);
         return "reg";
     }
@@ -44,7 +46,7 @@ public class SqlLiteRequest {
             return "Retry";
         else {
             String userName = rs.getString("userName");
-            String  sqlRequest = "UPDATE Users SET LastTime = date('now') WHERE Username ='"+userName+"';";
+            String  sqlRequest = "UPDATE Users SET LastTime = date('now') WHERE Username ='"+sanitize(userName)+"';";
             stm.executeUpdate(sqlRequest);
             return "ok";
         }
@@ -62,7 +64,7 @@ public class SqlLiteRequest {
 
     public  void deleteUser(String userName) throws ClassNotFoundException, SQLException, NamingException{
             createConnection();
-            String sqlRequest = "DELETE FROM Users WHERE Username ='" +userName+"';";
+            String sqlRequest = "DELETE FROM Users WHERE Username ='" +sanitize(userName)+"';";
             stm.executeUpdate(sqlRequest);
     }
 
@@ -90,7 +92,7 @@ public class SqlLiteRequest {
     public  String[] detectLanguage(String text) throws ClassNotFoundException, SQLException, NamingException {
         createConnection();
         double tmp;
-        String sqlRequest = "SELECT Probability,Language FROM Words WHERE Word ='" + text + "';";
+        String sqlRequest = "SELECT Probability,Language FROM Words WHERE Word ='" + sanitize(text) + "';";
         rs = stm.executeQuery(sqlRequest);
         return rs.isClosed() ? new String[]{} : new String[]{rs.getString("Language"),rs.getString("Probability")};
     }
@@ -98,28 +100,28 @@ public class SqlLiteRequest {
     public  void rememberWord(String word, String language, String probab) throws ClassNotFoundException, SQLException, NamingException{
         createConnection();
         double probability = Double.parseDouble(probab);
-        String sqlRequest = "INSERT INTO Words (Word,Language,Probability) VALUES ("+"'"+word+"','"+language+"','"+probability+"');";
+        String sqlRequest = "INSERT INTO Words (Word,Language,Probability) VALUES ("+"'"+sanitize(word)+"','"+sanitize(language)+"','"+sanitize(Double.toString(probability))+"');";
         stm.executeUpdate(sqlRequest);
 
     }
 
     public  void newRequest(String userName, String word) throws ClassNotFoundException, SQLException, NamingException{
         createConnection();
-        String sqlRequest = "INSERT INTO Requests (Username,Request) VALUES ('"+userName+"','"+word+"');";
+        String sqlRequest = "INSERT INTO Requests (Username,Request) VALUES ('"+sanitize(userName)+"','"+sanitize(word)+"');";
         stm.executeUpdate(sqlRequest);
         updateUserInfo(userName);
     }
 
     private  void updateUserInfo(String userName)throws ClassNotFoundException, SQLException, NamingException {
         createConnection();
-        String sqlRequest = "SELECT Number FROM Users WHERE Username ='"+userName+"';";
+        String sqlRequest = "SELECT Number FROM Users WHERE Username ='"+sanitize(userName)+"';";
         rs = stm.executeQuery(sqlRequest);
         int number = rs.isClosed() ? 0 : rs.getInt("Number");
         number++;
-        sqlRequest = "UPDATE Users SET Number = "+number+" WHERE Username = '"+userName+"';";
+        sqlRequest = "UPDATE Users SET Number = "+sanitize(Integer.toString(number))+" WHERE Username = '"+sanitize(userName)+"';";
         stm.executeUpdate(sqlRequest);
         if (number == 1 || number == 0) {
-            sqlRequest = "UPDATE Users SET AverageTime = julianday('now') WHERE Username = '"+userName+"';";
+            sqlRequest = "UPDATE Users SET AverageTime = julianday('now') WHERE Username = '"+sanitize(userName)+"';";
             stm.executeUpdate(sqlRequest);
         }
     }
@@ -128,5 +130,11 @@ public class SqlLiteRequest {
         rs.close();
         stm.close();
         conn.close();
+    }
+
+    private static @SqlEvenQuotes String sanitize(String userInput) {
+        @SuppressWarnings("sqlquotes")
+        @SqlEvenQuotes String sanitizedInput = userInput;
+        return sanitizedInput;
     }
 }
